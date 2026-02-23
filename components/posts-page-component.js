@@ -1,8 +1,8 @@
 import {USER_POSTS_PAGE} from "../routes.js";
 import {renderHeaderComponent} from "./header-component.js";
 import {goToPage, posts} from "../index.js";
-/*import {formatDistanceToNow} from 'date-fns';
-import ru from 'date-fns/locale/ru';*/
+import {formatDistanceToNow} from 'date-fns';
+import ru from 'date-fns/locale/ru';
 
 /**
  * Рендер постов из api
@@ -10,15 +10,6 @@ import ru from 'date-fns/locale/ru';*/
  */
 export function renderPostsPageComponent({ appEl }) {
   console.log("Актуальный список постов:", posts);
-
-    /*const ruLocale = require('date-fns/locale/ru')
-  /*
-    const eoLocale = require('date-fns/locale/eo')
-  const result = formatDistanceToNow(
-    new Date(2016, 7, 1),
-    {locale: ruLocale}
-  )
-     */
 
   const postsHtml = posts
       .map(post => {
@@ -49,16 +40,18 @@ export function renderPostsPageComponent({ appEl }) {
             </p>
             
             <p class="post-date">
-              3 часа назад
+              ${formatDistanceToNow(
+                post.createdAt,
+                {
+                  addSuffix: true,
+                  includeSeconds: true,
+                  locale: ru
+                }
+            )}
             </p>
           </li>`;
       })
       .join('');
-
-  /**
-   * @TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
-   * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
-   */
 
   appEl.innerHTML = `
               <div class="page-container">

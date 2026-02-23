@@ -1,23 +1,16 @@
 {
   "name": "webdev-cw-instapro",
-  "version": "1.0.0",
-  "description": "MVP социальной сети для обмена фотографиями",
-  "main": "index.js",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tatiankoko/webdev-cw-instapro.git"
+  "devDependencies": {
+    "vite": "^7.3.1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/tatiankoko/webdev-cw-instapro/issues"
-  },
-  "homepage": "https://github.com/tatiankoko/webdev-cw-instapro#readme",
   "dependencies": {
     "date-fns": "^4.1.0"
   }
