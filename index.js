@@ -1,28 +1,17 @@
-import { getPosts } from "./api.js";
-import { renderAddPostPageComponent } from "./components/add-post-page-component.js";
-import { renderAuthPageComponent } from "./components/auth-page-component.js";
-import {
-  ADD_POSTS_PAGE,
-  AUTH_PAGE,
-  LOADING_PAGE,
-  POSTS_PAGE,
-  USER_POSTS_PAGE,
-} from "./routes.js";
-import { renderPostsPageComponent } from "./components/posts-page-component.js";
-import { renderLoadingPageComponent } from "./components/loading-page-component.js";
-import {
-  getUserFromLocalStorage,
-  removeUserFromLocalStorage,
-  saveUserToLocalStorage,
-} from "./helpers.js";
+import {getPosts} from "./api.js";
+import {renderAddPostPageComponent} from "./components/add-post-page-component.js";
+import {renderAuthPageComponent} from "./components/auth-page-component.js";
+import {ADD_POSTS_PAGE, AUTH_PAGE, LOADING_PAGE, POSTS_PAGE, USER_POSTS_PAGE,} from "./routes.js";
+import {renderPostsPageComponent} from "./components/posts-page-component.js";
+import {renderLoadingPageComponent} from "./components/loading-page-component.js";
+import {getUserFromLocalStorage, removeUserFromLocalStorage, saveUserToLocalStorage,} from "./helpers.js";
 
 export let user = getUserFromLocalStorage();
 export let page = null;
 export let posts = [];
 
 const getToken = () => {
-  const token = user ? `Bearer ${user.token}` : undefined;
-  return token;
+  return user ? `Bearer ${user.token}` : undefined;
 };
 
 export const logout = () => {
@@ -67,7 +56,7 @@ export const goToPage = (newPage, data) => {
     }
 
     if (newPage === USER_POSTS_PAGE) {
-      // @@TODO: реализовать получение постов юзера из API
+      // @TODO: реализовать получение постов юзера из API
       console.log("Открываю страницу пользователя: ", data.userId);
       page = USER_POSTS_PAGE;
       posts = [];
@@ -124,7 +113,7 @@ const renderApp = () => {
   }
 
   if (page === USER_POSTS_PAGE) {
-    // @TODO: реализовать страницу с фотографиями отдельного пользвателя
+    // @TODO: реализовать страницу с фотографиями отдельного пользователя
     appEl.innerHTML = "Здесь будет страница фотографий пользователя";
     return;
   }

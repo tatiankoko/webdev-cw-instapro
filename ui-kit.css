@@ -147,7 +147,7 @@ strong {
 }
 .loader div:nth-child(3) {
   left: 56px;
-  animation-delay: 0;
+  animation-delay: 0s;
 }
 @keyframes loader {
   0% {
