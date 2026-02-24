@@ -24,6 +24,10 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
       element: document.querySelector(".header-container"),
     });
 
+    const headerButton = appEl.querySelector(".header-button");
+    // Скрываем отображение кнопки добавления поста
+    headerButton.style.display = "none";
+
     /**
      * URL изображения, загруженного пользователем.
      * @type {string}
