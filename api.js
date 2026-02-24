@@ -23,6 +23,25 @@ export function getPosts({ token }) {
     });
 }
 
+export function getUserPosts({ token, id }) {
+  return fetch(`${postsHost}/user-posts/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: token,
+    },
+  })
+      .then((response) => {
+        if (response.status === 401) {
+          throw new Error("Нет авторизации");
+        }
+
+        return response.json();
+      })
+      .then((data) => {
+        return data.posts;
+      });
+}
+
 export function registerUser({ login, password, name, imageUrl }) {
   return fetch(baseHost + "/api/user", {
     method: "POST",
