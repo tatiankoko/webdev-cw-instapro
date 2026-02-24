@@ -67,3 +67,26 @@ export function uploadImage({ file }) {
     return response.json();
   });
 }
+
+export const addPost = ({ token, description, imageUrl })=> {
+  return fetch(
+      postsHost,
+      {
+        method: "POST",
+        headers: {
+          Authorization: token,
+        },
+        body: JSON.stringify({
+          description,
+          imageUrl,
+        }),
+      })
+      .then(response => {
+        if (response.status === 400) {
+          throw new Error("В теле запроса не передан description, "
+              + "или не передан imageUrl, "
+              + "или в description - пустая строчка.");
+        }
+        return response.json();
+      })
+}

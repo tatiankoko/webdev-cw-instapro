@@ -1,12 +1,17 @@
 import {renderUploadImageComponent} from "./upload-image-component.js";
-
+import {renderHeaderComponent} from "./header-component.js";
+/**
+ * Рендер страницы добавления поста
+ * Этот компонент предоставляет пользователю интерфейс добавления нового поста.
+ * @param {HTMLElement} appEl - Корневой элемент приложения, в который будет рендериться страница.
+ * @param {Function} onAddPostClick - Функция, вызываемая при нажатии на кнопку добавления поста.
+ */
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   const render = () => {
-    // @TODO: Реализовать страницу добавления поста
-    const appHtml = `
+    appEl.innerHTML = `
       <div class="page-container">
         <div class="header-container"></div>
-        Cтраница добавления поста
+        <p>Cтраница добавления поста</p>
         <div class="upload-image-container"></div>
         <textarea type="textarea" placeholder="Добавьте подпись..." rows="4"
           id="text-input"></textarea>
@@ -14,7 +19,10 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
       </div>
     `;
 
-    appEl.innerHTML = appHtml;
+    // Рендерим заголовок страницы
+    renderHeaderComponent({
+      element: document.querySelector(".header-container"),
+    });
 
     /**
      * URL изображения, загруженного пользователем.

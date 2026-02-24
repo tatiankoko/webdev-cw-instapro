@@ -57,11 +57,15 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
         labelEl.textContent = "Загружаю файл...";
         
         // Загружаем изображение с помощью API
-        uploadImage({ file }).then(({ fileUrl }) => {
-          imageUrl = fileUrl; // Сохраняем URL загруженного изображения
-          onImageUrlChange(imageUrl); // Уведомляем о изменении URL изображения
-          render(); // Перерисовываем компонент с новым состоянием
-        });
+        uploadImage({ file })
+            .then(({ fileUrl }) => {
+              imageUrl = fileUrl; // Сохраняем URL загруженного изображения
+              onImageUrlChange(imageUrl); // Уведомляем об изменении URL изображения
+              render(); // Перерисовываем компонент с новым состоянием
+            })
+            .finally(()=>{
+              render();
+            });
       }
     });
 
