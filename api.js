@@ -109,3 +109,35 @@ export const addPost = ({ token, description, imageUrl })=> {
         return response.json();
       })
 }
+
+export function like({ token, id }) {
+    return fetch(`${postsHost}/${id}/like`, {
+        method: "POST",
+        headers: {
+            Authorization: token,
+        },
+    })
+        .then((response) => {
+            if (response.status === 401) {
+                throw new Error("Нет авторизации");
+            }
+
+            return response.json();
+        })
+}
+
+export function dislike({ token, id }) {
+    return fetch(`${postsHost}/${id}/dislike`, {
+        method: "POST",
+        headers: {
+            Authorization: token,
+        },
+    })
+        .then((response) => {
+            if (response.status === 401) {
+                throw new Error("Нет авторизации");
+            }
+
+            return response.json();
+        })
+}

@@ -8,9 +8,10 @@ import ru from 'date-fns/locale/ru';
  * Рендер постов из api
  * @param {HTMLElement} appEl - корневой элемент приложения, в который будет рендериться страница.
  * @param {boolean} isUserPostsPage - если true, то будет верстка страницы постов конкретного пользователя;
-*                                     если false, то главной страницы со всеми постами всех пользователей.
+ *                                     если false, то главной страницы со всеми постами всех пользователей.
+ * @param {Function} onLike - функция, вызываемая при нажатии на иконку лайка.
  */
-export function renderPostsPageComponent({ appEl, isUserPostsPage }) {
+export function renderPostsPageComponent({ appEl, isUserPostsPage, onLike }) {
   console.log("Актуальный список постов:", posts);
 
   const postHeaderHtml = (post)=> {
@@ -47,7 +48,7 @@ export function renderPostsPageComponent({ appEl, isUserPostsPage }) {
             
             <div class="post-likes">
               <button data-post-id="${post.id}" class="like-button">
-                <img src="./assets/images/like-not-active.svg" alt="сердечко лайка">
+                <img src="./assets/images/${post.isLiked ? 'like-active.svg' : 'like-not-active.svg'}" alt="сердечко лайка">
               </button>
               
               <p class="post-likes-text">
@@ -106,4 +107,16 @@ export function renderPostsPageComponent({ appEl, isUserPostsPage }) {
           });
       }
   }
+
+    for (let likeButtonEl of document.querySelectorAll(".like-button")) {
+        likeButtonEl.addEventListener("click", () => {
+            /*let post = posts.find((post) => {
+                return post.id === likeButtonEl.dataset.postId;
+            });*/
+
+            //if (post !== undefined) {
+                onLike(likeButtonEl.dataset.postId)
+            //}
+        });
+    }
 }
