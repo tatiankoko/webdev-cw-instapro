@@ -11,7 +11,6 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     appEl.innerHTML = `
       <div class="page-container">
         <div class="header-container"></div>
-        <p>Cтраница добавления поста</p>
         <div class="upload-image-container"></div>
         <textarea type="textarea" placeholder="Добавьте подпись..." rows="4"
           id="text-input"></textarea>
@@ -26,7 +25,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
     const headerButton = appEl.querySelector(".header-button");
     // Скрываем отображение кнопки добавления поста
-    headerButton.style.display = "none";
+    headerButton.style.opacity = "0";
 
     /**
      * URL изображения, загруженного пользователем.

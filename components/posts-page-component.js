@@ -6,20 +6,41 @@ import ru from 'date-fns/locale/ru';
 
 /**
  * Рендер постов из api
- * @param appEl
+ * @param {HTMLElement} appEl - корневой элемент приложения, в который будет рендериться страница.
+ * @param {boolean} isUserPostsPage - если true, то будет верстка страницы постов конкретного пользователя;
+*                                     если false, то главной страницы со всеми постами всех пользователей.
  */
-export function renderPostsPageComponent({ appEl }) {
+export function renderPostsPageComponent({ appEl, isUserPostsPage }) {
   console.log("Актуальный список постов:", posts);
+
+  const postHeaderHtml = (post)=> {
+      if (post === undefined) {
+          return ""
+      } else {
+          return `
+           <div class="${isUserPostsPage ? 'posts-user-header' : 'post-header'}" data-user-id="${post.user.id}">
+               <img 
+                    class="${isUserPostsPage ? 'posts-user-header__user-image' : 'post-header__user-image'}" 
+                    src="${post.user.imageUrl}" 
+                    alt="фото ${post.user.name}">
+               <p class="${isUserPostsPage ? 'posts-user-header__user-name' : 'post-header__user-name'}">
+                    ${post.user.name}
+               </p>
+           </div>
+          `
+      }
+  }
 
   const postsHtml = posts
       .map(post => {
         return `
-          <li class="post">
-            <div class="post-header" data-user-id="${post.user.id}">
-                <img class="post-header__user-image" src="${post.user.imageUrl}" class="post-header__user-image" alt="фото ${post.user.name}">
-                <p class="post-header__user-name">${post.user.name}</p>
-            </div>
-          
+          <li class="post">            
+            ${
+                !isUserPostsPage
+                ? postHeaderHtml(post)
+                : ""
+            }            
+            
             <div class="post-image-container">
               <img class="post-image" src="${post.imageUrl}" alt="${post.description}">
             </div>
@@ -56,6 +77,11 @@ export function renderPostsPageComponent({ appEl }) {
   appEl.innerHTML = `
               <div class="page-container">
                 <div class="header-container"></div>
+                ${
+                  isUserPostsPage
+                  ? postHeaderHtml(posts.at(0))
+                  : ""
+                }           
                 <ul class="posts">
                   ${postsHtml}
                 </ul>
@@ -65,11 +91,19 @@ export function renderPostsPageComponent({ appEl }) {
     element: document.querySelector(".header-container"),
   });
 
-  for (let userEl of document.querySelectorAll(".post-header")) {
-    userEl.addEventListener("click", () => {
-      goToPage(USER_POSTS_PAGE, {
-        userId: userEl.dataset.userId,
-      });
-    });
+  if (isUserPostsPage) {
+      const headerButton = appEl.querySelector(".header-button");
+      // Скрываем отображение кнопки добавления поста
+      headerButton.style.opacity = "0";
+  }
+
+  if (!isUserPostsPage) {
+      for (let userEl of document.querySelectorAll(".post-header")) {
+          userEl.addEventListener("click", () => {
+              goToPage(USER_POSTS_PAGE, {
+                  userId: userEl.dataset.userId,
+              });
+          });
+      }
   }
 }
