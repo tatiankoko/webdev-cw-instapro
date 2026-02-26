@@ -14,6 +14,7 @@ import ru from 'date-fns/locale/ru';
 export function renderPostsPageComponent({ appEl, isUserPostsPage, onLike }) {
   console.log("Актуальный список постов:", posts);
 
+  // Рендер информации о пользователе
   const postHeaderHtml = (post)=> {
       if (post === undefined) {
           return ""
@@ -94,10 +95,11 @@ export function renderPostsPageComponent({ appEl, isUserPostsPage, onLike }) {
 
   if (isUserPostsPage) {
       const headerButton = appEl.querySelector(".header-button");
-      // Скрываем отображение кнопки добавления поста
+      // Скрываем отображение кнопки добавления поста для страницы с постами конкретного юзера
       headerButton.style.opacity = "0";
   }
 
+  // Обработка клика на автора поста только для страницы с постами всех пользователей
   if (!isUserPostsPage) {
       for (let userEl of document.querySelectorAll(".post-header")) {
           userEl.addEventListener("click", () => {
@@ -108,15 +110,10 @@ export function renderPostsPageComponent({ appEl, isUserPostsPage, onLike }) {
       }
   }
 
-    for (let likeButtonEl of document.querySelectorAll(".like-button")) {
-        likeButtonEl.addEventListener("click", () => {
-            /*let post = posts.find((post) => {
-                return post.id === likeButtonEl.dataset.postId;
-            });*/
-
-            //if (post !== undefined) {
-                onLike(likeButtonEl.dataset.postId)
-            //}
-        });
-    }
+  // Обработка клика на лайк
+  for (let likeButtonEl of document.querySelectorAll(".like-button")) {
+      likeButtonEl.addEventListener("click", () => {
+          onLike(likeButtonEl.dataset.postId)
+      });
+  }
 }

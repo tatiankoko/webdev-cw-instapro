@@ -130,28 +130,7 @@ const renderApp = () => {
     return renderPostsPageComponent({
       appEl,
       isUserPostsPage : false,
-      onLike(postId) {
-        const post = posts.find((post) => post.id === postId);
-
-        (post.isLiked
-                ? dislike({
-                  token: getToken(),
-                  id: post.id,
-                })
-                : like({
-                  token: getToken(),
-                  id: post.id,
-                })
-        )
-            .then(likedPost => {
-              post.likes = likedPost.post.likes;
-              post.isLiked = likedPost.post.isLiked;
-            })
-            .catch((error) => {
-              console.error(error);
-            })
-            .finally(()=> renderApp())
-      }
+      onLike
     });
   }
 
@@ -159,25 +138,40 @@ const renderApp = () => {
     return renderPostsPageComponent({
       appEl,
       isUserPostsPage : true,
-      onLike({ post }) {
-        if (post.isLiked) {
-          dislike({
-            token: getToken(),
-            id: post.id,
-          }).then(likedPost => {
-            post = likedPost;
-          })
-        } else {
-          like({
-            token: getToken(),
-            id: post.id,
-          }).then(likedPost => {
-            post = likedPost;
-          })
-        }
-      }
+      onLike
     });
   }
 };
+
+/**
+ * Ставит/убирает лайк.
+ * Отправляет запрос поставить лайк, если лайка не было.
+ * Отправляет запрос снять лайк, если лайк уже стоял.
+ * @param postId - id поста
+ */
+const onLike = (postId) => {
+  const post = posts.find((post) => post.id === postId);
+
+  if (post === undefined)
+    return;
+
+  (post.isLiked
+          ? dislike({
+            token: getToken(),
+            id: post.id,
+          })
+          : like({
+            token: getToken(),
+            id: post.id,
+          }))
+      .then(likedPost => {
+        post.likes = likedPost.post.likes;
+        post.isLiked = likedPost.post.isLiked;
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(()=> renderApp())
+}
 
 goToPage(POSTS_PAGE);
