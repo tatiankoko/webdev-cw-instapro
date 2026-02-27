@@ -15,18 +15,18 @@ export function renderPostsPageComponent({ appEl, isUserPostsPage, onLike }) {
   console.log("Актуальный список постов:", posts);
 
   // Рендер информации о пользователе
-  const postHeaderHtml = (post)=> {
-      if (post === undefined) {
+  const postHeaderHtml = (user)=> {
+      if (user === undefined) {
           return ""
       } else {
           return `
-           <div class="${isUserPostsPage ? 'posts-user-header' : 'post-header'}" data-user-id="${post.user.id}">
+           <div class="${isUserPostsPage ? 'posts-user-header' : 'post-header'}" data-user-id="${user.id}">
                <img 
                     class="${isUserPostsPage ? 'posts-user-header__user-image' : 'post-header__user-image'}" 
-                    src="${post.user.imageUrl}" 
-                    alt="фото ${post.user.name}">
+                    src="${user.imageUrl}" 
+                    alt="фото ${user.name}">
                <p class="${isUserPostsPage ? 'posts-user-header__user-name' : 'post-header__user-name'}">
-                    ${post.user.name}
+                    ${user.name}
                </p>
            </div>
           `
@@ -39,7 +39,7 @@ export function renderPostsPageComponent({ appEl, isUserPostsPage, onLike }) {
           <li class="post">            
             ${
                 !isUserPostsPage
-                ? postHeaderHtml(post)
+                ? postHeaderHtml(post.user)
                 : ""
             }            
             
@@ -76,12 +76,16 @@ export function renderPostsPageComponent({ appEl, isUserPostsPage, onLike }) {
       })
       .join('');
 
+  const currentUser = isUserPostsPage
+      ? posts.at(0).user
+      : null;
+
   appEl.innerHTML = `
               <div class="page-container">
                 <div class="header-container"></div>
                 ${
                   isUserPostsPage
-                  ? postHeaderHtml(posts.at(0))
+                  ? postHeaderHtml(currentUser)
                   : ""
                 }           
                 <ul class="posts">
@@ -90,14 +94,9 @@ export function renderPostsPageComponent({ appEl, isUserPostsPage, onLike }) {
               </div>`;
 
   renderHeaderComponent({
-    element: document.querySelector(".header-container"),
+      element: document.querySelector(".header-container"),
+      userId: currentUser ? currentUser.id: '',
   });
-
-  if (isUserPostsPage) {
-      const headerButton = appEl.querySelector(".header-button");
-      // Скрываем отображение кнопки добавления поста для страницы с постами конкретного юзера
-      headerButton.style.opacity = "0";
-  }
 
   // Обработка клика на автора поста только для страницы с постами всех пользователей
   if (!isUserPostsPage) {
