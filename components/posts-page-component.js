@@ -28,8 +28,10 @@ const getPostWord = (postsNumber)=> {
  * @param {boolean} isUserPostsPage - если true, то будет верстка страницы постов конкретного пользователя;
  *                                     если false, то главной страницы со всеми постами всех пользователей.
  * @param {Function} onLike - функция, вызываемая при нажатии на иконку лайка.
+ * @param {Function} onDelete - функция, вызываемая при нажатии на кнопку удаления поста. Актуально только для страницы
+ *                              постов зарегистрированного пользователя.
  */
-export function renderPostsPageComponent({ appEl, isUserPostsPage, onLike }) {
+export function renderPostsPageComponent({ appEl, isUserPostsPage, onLike, onDelete }) {
   console.log("Актуальный список постов:", posts);
 
   const postsHtml = posts
@@ -49,7 +51,7 @@ export function renderPostsPageComponent({ appEl, isUserPostsPage, onLike }) {
                ${
                  isUserPostsPage && post.user.id === user._id
                    ? `
-                        <div class="posts-user-header__menu">
+                        <div class="posts-user-header__menu" data-post-id="${post.id}">
                             <div class="posts-user-header__menu-sign"></div>
                             <button class="posts-user-header__menu-delete">Удалить</button>
                         </div>`
@@ -160,6 +162,12 @@ export function renderPostsPageComponent({ appEl, isUserPostsPage, onLike }) {
 
       menuDeleteEl.addEventListener("blur", () => {
           menuDeleteEl.style.display = "none";
+      });
+
+      menuDeleteEl.addEventListener("click", () => {
+          menuDeleteEl.disabled = true;
+          onDelete(menuEl.dataset.postId);
+          menuDeleteEl.disabled = false;
       });
   }
 }

@@ -1,4 +1,4 @@
-import {addPost, dislike, getPosts, getUserPosts, like} from "./api.js";
+import {addPost, deletePost, dislike, getPosts, getUserPosts, like} from "./api.js";
 import {renderAddPostPageComponent} from "./components/add-post-page-component.js";
 import {renderAuthPageComponent} from "./components/auth-page-component.js";
 import {ADD_POSTS_PAGE, AUTH_PAGE, LOADING_PAGE, POSTS_PAGE, USER_POSTS_PAGE,} from "./routes.js";
@@ -138,7 +138,22 @@ const renderApp = () => {
     return renderPostsPageComponent({
       appEl,
       isUserPostsPage : true,
-      onLike
+      onLike,
+      onDelete(postId) {
+          deletePost({
+              token: getToken(),
+              id: postId,
+          })
+              .then(() => {
+                  const post = posts.find((post) => post.id === postId);
+
+                  if (post !== undefined) {
+                      posts.splice(posts.indexOf(post), 1);
+                  }
+              })
+              .catch((error) => console.error(error))
+              .finally(()=> renderApp());
+      },
     });
   }
 };

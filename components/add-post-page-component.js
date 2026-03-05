@@ -23,6 +23,12 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
       element: document.querySelector(".header-container"),
     });
 
+    // Скрываем отображение кнопки добавления поста
+    const addOrLoginButtonEl = appEl.querySelector(".add-or-login-button");
+    if (addOrLoginButtonEl) {
+      addOrLoginButtonEl.style.display = "none";
+    }
+
     /**
      * URL изображения, загруженного пользователем.
      * @type {string}

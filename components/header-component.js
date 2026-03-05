@@ -57,11 +57,6 @@ export function renderHeaderComponent({ element, userId = '' }) {
       }
     });
 
-  // Скрываем отображение кнопки добавления поста для страницы с постами конкретного юзера
-  if (userId !== '') {
-      addOrLoginButtonEl.style.display = "none";
-  }
-
   /**
    * Обработчик клика по логотипу.
    * Перенаправляет на страницу с постами.
