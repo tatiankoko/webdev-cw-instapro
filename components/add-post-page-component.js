@@ -1,5 +1,6 @@
 import {renderUploadImageComponent} from "./upload-image-component.js";
 import {renderHeaderComponent} from "./header-component.js";
+import {htmlTagsConverter} from "./html-tags-converter.js";
 /**
  * Рендер страницы добавления поста
  * Этот компонент предоставляет пользователю интерфейс добавления нового поста.
@@ -68,7 +69,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
       event.target.disabled = true;
 
       onAddPostClick({
-        description: textInputEl.value,
+        description: htmlTagsConverter(textInputEl.value),
         imageUrl: imageUrl,
       });
     });

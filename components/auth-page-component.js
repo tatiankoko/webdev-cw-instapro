@@ -1,14 +1,15 @@
 import {loginUser, registerUser} from "../api.js";
 import {renderHeaderComponent} from "./header-component.js";
 import {renderUploadImageComponent} from "./upload-image-component.js";
+import {htmlTagsConverter} from "./html-tags-converter.js";
 
 /**
  * Компонент страницы авторизации.
  * Этот компонент предоставляет пользователю интерфейс для входа в систему или регистрации.
  * Форма переключается между режимами "Вход" и "Регистрация".
  *
- * @param {HTMLElement} params.appEl - Корневой элемент приложения, в который будет рендериться страница.
- * @param {Function} params.setUser - Функция, вызываемая при успешной авторизации или регистрации.
+ * @param {HTMLElement} appEl - Корневой элемент приложения, в который будет рендериться страница.
+ * @param {Function} setUser - Функция, вызываемая при успешной авторизации или регистрации.
  *                                    Принимает объект пользователя в качестве аргумента.
  */
 export function renderAuthPageComponent({ appEl, setUser }) {
@@ -102,8 +103,8 @@ export function renderAuthPageComponent({ appEl, setUser }) {
 
       if (isLoginMode) {
         // Обработка входа
-        const login = document.getElementById("login-input").value;
-        const password = document.getElementById("password-input").value;
+        const login = htmlTagsConverter(document.getElementById("login-input").value);
+        const password = htmlTagsConverter(document.getElementById("password-input").value);
 
         if (!login) {
           alert("Введите логин");
@@ -128,9 +129,9 @@ export function renderAuthPageComponent({ appEl, setUser }) {
           });
       } else {
         // Обработка регистрации
-        const login = document.getElementById("login-input").value;
-        const name = document.getElementById("name-input").value;
-        const password = document.getElementById("password-input").value;
+        const login = htmlTagsConverter(document.getElementById("login-input").value);
+        const name = htmlTagsConverter(document.getElementById("name-input").value);
+        const password = htmlTagsConverter(document.getElementById("password-input").value);
 
         if (!name) {
           alert("Введите имя");
