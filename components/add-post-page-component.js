@@ -4,10 +4,12 @@ import {htmlTagsConverter} from "./html-tags-converter.js";
 /**
  * Рендер страницы добавления поста
  * Этот компонент предоставляет пользователю интерфейс добавления нового поста.
+ * @param {Object} user - Объект пользователя, содержащий данные о текущем авторизованном пользователе (если он есть).
  * @param {HTMLElement} appEl - Корневой элемент приложения, в который будет рендериться страница.
+ * @param {Function} goToPage - Функция для навигации по страницам.
  * @param {Function} onAddPostClick - Функция, вызываемая при нажатии на кнопку добавления поста.
  */
-export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
+export function renderAddPostPageComponent({ user, appEl, goToPage, onAddPostClick }) {
   const render = () => {
     appEl.innerHTML = `
       <div class="page-container">
@@ -25,7 +27,9 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
     // Рендерим заголовок страницы
     renderHeaderComponent({
+      user,
       element: document.querySelector(".header-container"),
+      goToPage,
     });
 
     // Скрываем отображение кнопки добавления поста

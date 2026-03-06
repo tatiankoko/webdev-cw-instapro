@@ -6,9 +6,9 @@ import {renderPostsPageComponent} from "./components/posts-page-component.js";
 import {renderLoadingPageComponent} from "./components/loading-page-component.js";
 import {getUserFromLocalStorage, removeUserFromLocalStorage, saveUserToLocalStorage,} from "./helpers.js";
 
-export let user = getUserFromLocalStorage();
-export let page = null;
-export let posts = [];
+let user = getUserFromLocalStorage();
+let page = null;
+let posts = [];
 
 const getToken = () => {
   return user ? `Bearer ${user.token}` : undefined;
@@ -23,7 +23,7 @@ export const logout = () => {
 /**
  * Включает страницу приложения
  */
-export const goToPage = (newPage, data) => {
+const goToPage = (newPage, data) => {
   if (
     [
       POSTS_PAGE,
@@ -108,7 +108,9 @@ const renderApp = () => {
 
   if (page === ADD_POSTS_PAGE) {
     return renderAddPostPageComponent({
+      user,
       appEl,
+      goToPage,
       onAddPostClick({ description, imageUrl }) {
         addPost({
           token: getToken(),
@@ -128,32 +130,38 @@ const renderApp = () => {
 
   if (page === POSTS_PAGE) {
     return renderPostsPageComponent({
-      appEl,
-      isUserPostsPage : false,
-      onLike
+        user,
+        appEl,
+        isUserPostsPage : false,
+        posts,
+        goToPage,
+        onLike
     });
   }
 
   if (page === USER_POSTS_PAGE) {
     return renderPostsPageComponent({
-      appEl,
-      isUserPostsPage : true,
-      onLike,
-      onDelete(postId) {
-          deletePost({
-              token: getToken(),
-              id: postId,
-          })
-              .then(() => {
-                  const post = posts.find((post) => post.id === postId);
+        user,
+        appEl,
+        isUserPostsPage : true,
+        posts,
+        goToPage,
+        onLike,
+        onDelete(postId) {
+            deletePost({
+                token: getToken(),
+                id: postId,
+            })
+                .then(() => {
+                    const post = posts.find((post) => post.id === postId);
 
-                  if (post !== undefined) {
-                      posts.splice(posts.indexOf(post), 1);
-                  }
-              })
-              .catch((error) => console.error(error))
-              .finally(()=> renderApp());
-      },
+                    if (post !== undefined) {
+                        posts.splice(posts.indexOf(post), 1);
+                    }
+                })
+                .catch((error) => console.error(error))
+                .finally(()=> renderApp());
+            },
     });
   }
 };

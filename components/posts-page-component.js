@@ -1,6 +1,5 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { goToPage, posts, user } from "../index.js";
 import { formatDistanceToNow } from "date-fns";
 import ru from "date-fns/locale/ru";
 
@@ -24,14 +23,25 @@ const getPostWord = (postsNumber)=> {
 
 /**
  * Рендер постов из api
- * @param {HTMLElement} appEl - корневой элемент приложения, в который будет рендериться страница.
- * @param {boolean} isUserPostsPage - если true, то будет верстка страницы постов конкретного пользователя;
+ *
+ * @param {Object} user - Объект пользователя, содержащий данные о текущем авторизованном пользователе (если он есть).
+ * @param {HTMLElement} appEl - Корневой элемент приложения, в который будет рендериться страница.
+ * @param {boolean} isUserPostsPage - Если true, то будет верстка страницы постов конкретного пользователя;
  *                                     если false, то главной страницы со всеми постами всех пользователей.
- * @param {Function} onLike - функция, вызываемая при нажатии на иконку лайка.
- * @param {Function} onDelete - функция, вызываемая при нажатии на кнопку удаления поста. Актуально только для страницы
+ * @param {Object[]} posts - Список объектов постов
+ * @param {Function} goToPage - Функция для навигации по страницам.
+ * @param {Function} onLike - Функция, вызываемая при нажатии на иконку лайка.
+ * @param {Function} onDelete - Функция, вызываемая при нажатии на кнопку удаления поста. Актуально только для страницы
  *                              постов зарегистрированного пользователя.
  */
-export function renderPostsPageComponent({ appEl, isUserPostsPage, onLike, onDelete }) {
+export function renderPostsPageComponent({
+                                             user,
+                                             appEl,
+                                             isUserPostsPage,
+                                             posts,
+                                             goToPage,
+                                             onLike,
+                                             onDelete }) {
   console.log("Актуальный список постов:", posts);
 
   const postsHtml = posts
@@ -127,8 +137,10 @@ export function renderPostsPageComponent({ appEl, isUserPostsPage, onLike, onDel
               </div>`;
 
   renderHeaderComponent({
-    element: document.querySelector(".header-container"),
-    userId: currentUser ? currentUser.id : "",
+      user,
+      element: document.querySelector(".header-container"),
+      goToPage,
+      userId: currentUser ? currentUser.id : "",
   });
 
   // Обработка клика на автора поста только для страницы с постами всех пользователей
