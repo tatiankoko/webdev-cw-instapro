@@ -145,10 +145,18 @@ export function renderPostsPageComponent({ appEl, isUserPostsPage, onLike, onDel
   }
 
   // Обработка клика на лайк
+  // доступно только для авторизованного пользователя
   for (let likeButtonEl of document.querySelectorAll(".like-button")) {
-    likeButtonEl.addEventListener("click", () => {
-      onLike(likeButtonEl.dataset.postId);
-    });
+      if (user) {
+          likeButtonEl.addEventListener("click", () => {
+              likeButtonEl.classList.add('like-button__loading');
+              likeButtonEl.disabled = true;
+              onLike(likeButtonEl.dataset.postId);
+          });
+      } else {
+          likeButtonEl.disabled = true;
+          likeButtonEl.style.cursor = "auto";
+      }
   }
 
   for (let menuEl of document.querySelectorAll(".posts-user-header__menu")) {

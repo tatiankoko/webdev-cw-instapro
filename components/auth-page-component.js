@@ -97,7 +97,7 @@ export function renderAuthPageComponent({ appEl, setUser }) {
     }
 
     // Обработка клика на кнопку входа/регистрации
-    document.getElementById("login-button").addEventListener("click", () => {
+    document.getElementById("login-button").addEventListener("click", (event) => {
       setError("");
 
       if (isLoginMode) {
@@ -114,6 +114,9 @@ export function renderAuthPageComponent({ appEl, setUser }) {
           alert("Введите пароль");
           return;
         }
+
+        // Избегаем повторного нажатия
+        event.target.disabled = true;
 
         loginUser({ login, password })
           .then((user) => {

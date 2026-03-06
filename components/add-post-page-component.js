@@ -51,7 +51,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
       });
     }
 
-    document.getElementById("add-button").addEventListener("click", () => {
+    document.getElementById("add-button").addEventListener("click", (event) => {
       if (!imageUrl) {
         alert("Не выбрана фотография");
         return;
@@ -63,6 +63,9 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
         alert("Добавьте подпись!");
         return;
       }
+
+      // Избегаем повторного нажатия
+      event.target.disabled = true;
 
       onAddPostClick({
         description: textInputEl.value,

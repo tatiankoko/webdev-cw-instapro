@@ -79,6 +79,7 @@
   width: 40px;
   height: 40px;
   object-fit: cover;
+  border: 1px solid #e0e0e0;
   border-radius: 40px;
   margin-right: 10px;
 }
@@ -109,6 +110,25 @@
   background-color: transparent;
   padding: 8px 8px 5px 0;
   cursor: pointer;
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(30deg);
+  }
+  75% {
+    transform: rotate(-30deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.like-button__loading {
+  animation: rotating 2s linear infinite;
 }
 
 .user-name {
