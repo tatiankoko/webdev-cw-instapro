@@ -49,7 +49,7 @@ export function renderPostsPageComponent({ appEl, isUserPostsPage, onLike, onDel
                    </p>
                </div>
                ${
-                 isUserPostsPage && post.user.id === user._id
+                 isUserPostsPage && user && post.user.id === user._id
                    ? `
                         <div class="posts-user-header__menu" data-post-id="${post.id}">
                             <div class="posts-user-header__menu-sign"></div>

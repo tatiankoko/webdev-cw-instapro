@@ -11,10 +11,14 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     appEl.innerHTML = `
       <div class="page-container">
         <div class="header-container"></div>
-        <div class="upload-image-container"></div>
-        <textarea type="textarea" placeholder="Добавьте подпись..." rows="4"
-          id="text-input"></textarea>
-        <button class="button" id="add-button">Добавить</button>
+        <div class = "page-content">
+          <div class = "form">
+              <div class="upload-image-container"></div>
+              <textarea class="textarea" placeholder="Добавьте подпись..." rows="4"
+                id="text-input"></textarea>
+              <button class="button" id="add-button">Добавить</button>
+          </div>
+        </div>
       </div>
     `;
 

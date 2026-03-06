@@ -39,6 +39,12 @@
   text-align: right;
 }
 
+.page-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .posts {
   display: flex;
   flex-direction: column;
@@ -77,9 +83,6 @@
   margin-right: 10px;
 }
 
-/*
-Try setting the display: list-item property on the parent to display: flex.
- */
 .post-image-container {
   margin-left: -20px;
   margin-right: -20px;
@@ -137,8 +140,6 @@ Try setting the display: list-item property on the parent to display: flex.
 .posts-user-header__user-info {
   display: flex;
   flex-direction: column;
-  /*align-items: center;
-  cursor: pointer;*/
 }
 
 .posts-user-header__user-image {
@@ -194,7 +195,9 @@ Try setting the display: list-item property on the parent to display: flex.
 .form {
   display: flex;
   flex-direction: column;
+  gap: 10px;
   width: 100%;
+  max-width: 500px;
 }
 
 .form-title {
