@@ -21,6 +21,15 @@ export const logout = () => {
 };
 
 /**
+ * Возвращает пост с заданным id из списка постов.
+ * @param {string} id - Id требуемого поста.
+ * @returns {Object} - Объект поста, если пост с заданным id существует, иначе undefined.
+ */
+export const getPostById = (id) => {
+    return posts.find((post) => post.id === id);
+}
+
+/**
  * Включает страницу приложения
  */
 const goToPage = (newPage, data) => {
@@ -153,7 +162,7 @@ const renderApp = () => {
                 id: postId,
             })
                 .then(() => {
-                    const post = posts.find((post) => post.id === postId);
+                    const post = getPostById(postId);
 
                     if (post !== undefined) {
                         posts.splice(posts.indexOf(post), 1);
@@ -173,7 +182,7 @@ const renderApp = () => {
  * @param postId - id поста
  */
 const onLike = (postId) => {
-  const post = posts.find((post) => post.id === postId);
+  const post = getPostById(postId);
 
   if (post === undefined)
     return;

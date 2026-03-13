@@ -2,6 +2,7 @@ import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { formatDistanceToNow } from "date-fns";
 import ru from "date-fns/locale/ru";
+import { getPostById } from "../index.js";
 
 /**
  * Функция для правильного выбора окончания слова 'публикация' в зависимости от цифры перед словом.
@@ -19,6 +20,26 @@ const getPostWord = (postsNumber)=> {
     return "публикации";
 
   return "публикаций";
+}
+
+/**
+ * Возвращает количества лайков поста в нужном формате.
+ * @param {Object} likes - Список лайков одного поста.
+ * @returns {string} - Имя последнего лайкнувшего пользователя и количество лайков поста.
+ */
+const getLikesText = (likes)=> {
+    let likesText = '0';
+
+    if (likes.length > 0) {
+        const like = likes.at(-1);
+        likesText = like.name;
+
+        if (likes.length > 1) {
+            likesText += ' и еще ' + (String) (likes.length - 1);
+        }
+    }
+
+    return likesText;
 }
 
 /**
@@ -78,9 +99,12 @@ export function renderPostsPageComponent({
                 <img src="./assets/images/${post.isLiked ? "like-active.svg" : "like-not-active.svg"}" alt="сердечко лайка">
               </button>
               
-              <p class="post-likes-text">
-                Нравится: <strong>${post.likes.length}</strong>
+              <p class="post-likes-text" data-post-id="${post.id}">
+                Нравится: <strong>${getLikesText(post.likes)}</strong>
               </p>
+              
+              <ul class="post-likes-list" tabindex="0">
+              </ul>                      
             </div>
             
             <p class="post-text">
@@ -156,8 +180,8 @@ export function renderPostsPageComponent({
     }
   }
 
-  // Обработка клика на лайк
-  // доступно только для авторизованного пользователя
+  // Обработка клика на лайк.
+  // Доступно только для авторизованного пользователя
   for (let likeButtonEl of document.querySelectorAll(".like-button")) {
       if (user) {
           likeButtonEl.addEventListener("click", () => {
@@ -171,6 +195,84 @@ export function renderPostsPageComponent({
       }
   }
 
+  /*
+   * Рендер списка лайкнувших пользователей.
+   */
+  const getLikesListHtml = (likes)=> {
+      const listHtml = likes.map((like) => {
+          /*
+          Нюанс апи - если запрошен список постов конкретного пользователя,
+          то возвращается список лайков с полем _id и полной информацией
+          об аккаунтах лайкнувших пользователей
+           */
+          const userId = like.id ? like.id : like._id;
+
+          return `
+           <li class="post-likes-list-item" data-user-id="${userId}">
+              ${
+              like.id
+                  ? `<img src="../assets/images/like-active.svg" alt="сердечко лайка">`
+                  : `<img src=${like.imageUrl} alt="фото пользователя" class="post-likes-list-item__image">`
+              }
+              <p>${like.name}</p>                                                  
+           </li>`
+      }).join("");
+
+      if (listHtml !== "") {
+          return listHtml;
+      } else {
+          return `<p>Никто еще не поставил лайк</p>`
+      }
+  }
+
+  /*
+  Обработка клика на количество лайкнувших пост пользователей
+   */
+  for (let likeTextEl of
+      document.querySelectorAll(".post-likes-text")) {
+      likeTextEl.addEventListener("click", () => {
+          const postLikesListEl = likeTextEl.nextElementSibling;
+
+          if (postLikesListEl) {
+              const post = getPostById(likeTextEl.dataset.postId);
+
+              if (post) {
+                  postLikesListEl.style.display = "flex";
+
+                  // Рендер списка лайкнувших пользователей.
+                  postLikesListEl.innerHTML = getLikesListHtml(post.likes)
+
+                  // При клике на имя лайкнувшего пользователя переходим на страницу постов этого пользователя
+                  for (let likesListItemEl of document.querySelectorAll(".post-likes-list-item")) {
+                      likesListItemEl.addEventListener("click", (event) => {
+                          event.stopPropagation();
+
+                          goToPage(USER_POSTS_PAGE, {
+                              userId: likesListItemEl.dataset.userId,
+                          });
+                      })
+                  }
+
+                  // Фокус, чтобы сработал blur
+                  postLikesListEl.focus();
+              }
+          }
+      })
+  }
+
+  /*
+  Убираем список лайкнувших пользователей при потере фокуса
+   */
+  for (let postLikesListEl of
+      document.querySelectorAll(".post-likes-list")) {
+      postLikesListEl.addEventListener("blur", () => {
+          postLikesListEl.style.display = "none";
+      })
+  }
+
+  /*
+  Рендер меню поста (три точки в правом верхнем углу)
+   */
   for (let menuEl of document.querySelectorAll(".posts-user-header__menu")) {
     const menuSignEl = menuEl.children[0];
     const menuDeleteEl = menuEl.children[1];
