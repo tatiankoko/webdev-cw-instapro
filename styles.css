@@ -11,6 +11,7 @@
   padding: 20px 16px;
   margin-left: -20px;
   margin-right: -20px;
+  height: 44px;
 }
 
 .logo {
@@ -214,6 +215,7 @@
   object-fit: cover;
   border-radius: 40px;
   margin-right: 10px;
+  border: 1px solid #e0e0e0;
 }
 
 .posts-user-header__user-name {

@@ -18,6 +18,7 @@ p,
 }
 
 .post-header__user-image,
+.posts-user-header__user-image,
 .file-upload-image {
   border: 1px solid #262626;
 }
