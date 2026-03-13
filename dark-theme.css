@@ -1,0 +1,83 @@
+body {
+  background-color: #0C1014;
+}
+
+p,
+.logo,
+.header-button,
+.form-title {
+  color: #F5F5F5;
+}
+
+.add-post-sign {
+  background-image: url("data:image/svg+xml,%3Csvg id='Layer_1' fill='white' data-name='Layer 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 122.88 122.88'%3E%3Ctitle%3Eadd%3C/title%3E%3Cpath d='M61.44,0A61.46,61.46,0,1,1,18,18,61.25,61.25,0,0,1,61.44,0ZM88.6,56.82v9.24a4,4,0,0,1-4,4H70V84.62a4,4,0,0,1-4,4H56.82a4,4,0,0,1-4-4V70H38.26a4,4,0,0,1-4-4V56.82a4,4,0,0,1,4-4H52.84V38.26a4,4,0,0,1,4-4h9.24a4,4,0,0,1,4,4V52.84H84.62a4,4,0,0,1,4,4Zm8.83-31.37a50.92,50.92,0,1,0,14.9,36,50.78,50.78,0,0,0-14.9-36Z'/%3E%3C/svg%3E");
+}
+
+.page-header {
+  border-bottom: 1px solid #262626;
+}
+
+.post-header__user-image,
+.file-upload-image {
+  border: 1px solid #262626;
+}
+
+.posts-user-header__menu-sign {
+  background-image: url("data:image/svg+xml,%3Csvg fill='white' version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 342.382 342.382' xml:space='preserve'%3E%3Cg id='SVGRepo_bgCarrier' stroke-width='0'%3E%3C/g%3E%3Cg id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'%3E%3C/g%3E%3Cg id='SVGRepo_iconCarrier'%3E%3Cg%3E%3Cg%3E%3Cg%3E%3Cpath d='M45.225,125.972C20.284,125.972,0,146.256,0,171.191c0,24.94,20.284,45.219,45.225,45.219 c24.926,0,45.219-20.278,45.219-45.219C90.444,146.256,70.151,125.972,45.225,125.972z'%3E%3C/path%3E%3C/g%3E%3Cg%3E%3Cpath d='M173.409,125.972c-24.938,0-45.225,20.284-45.225,45.219c0,24.94,20.287,45.219,45.225,45.219 c24.936,0,45.226-20.278,45.226-45.219C218.635,146.256,198.345,125.972,173.409,125.972z'%3E%3C/path%3E%3C/g%3E%3Cg%3E%3Cpath d='M297.165,125.972c-24.932,0-45.222,20.284-45.222,45.219c0,24.94,20.29,45.219,45.222,45.219 c24.926,0,45.217-20.278,45.217-45.219C342.382,146.256,322.091,125.972,297.165,125.972z'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.post-likes-list {
+  background-color: rgba(12, 16, 20, 0.9);
+}
+.post-likes-list-item:hover {
+  background-color: #25282C;
+}
+
+.loader div {
+  background: #F5F5F5;
+}
+
+.post-date {
+  color: #9D9D9D;
+}
+
+.post-image-container {
+  border: 1px solid #262626;
+  background-color: #262626;
+}
+
+.secondary-button {
+  background-color: #212328;
+  color: #85A1FF;
+}
+
+.secondary-button:hover {
+  background-color: #25282C;
+}
+
+.input,
+.textarea {
+  color: #F5F5F5;
+  background-color: #212328;
+}
+
+.input:autofill ,
+.textarea:autofill {
+  color: #F5F5F5;
+  background-color: #212328;
+}
+
+.input:focus,
+.input .-error {
+  background-color: #212328;
+}
+
+.posts-user-header__menu-delete {
+  border: none;
+  background-color: #212328;
+  color: #F8F9F9;
+}
+
+.posts-user-header__menu-delete:hover {
+  background-color: #25282C;
+}

@@ -57,7 +57,6 @@
 .post {
   display: flex;
   flex-direction: column;
-  /*border: 1px solid #e0e0e0;*/
 }
 
 .post-header {
@@ -123,7 +122,6 @@
   gap: 10px;
 
   max-width: 300px;
-  /*max-height: 25px;*/
   border: 1px solid grey;/*#e0e0e0;*/
   border-radius: 16px;
 
@@ -131,7 +129,6 @@
 
   outline: none;
 }
-
 
 .post-likes-list-item {
   display: flex;
@@ -240,13 +237,19 @@
 .posts-user-header__menu-delete {
   display: none; /* Hidden by default */
   position: absolute;
-  /*border: 0;*/
-  /*background-color: #ffffff;
-  min-width: 85px;*/
+
+  font-size: 14px;
+  line-height: 22px;
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+  outline: none;
+
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   padding: 4px 10px;
   margin: 32px 0;
   z-index: 1;
+
+  cursor: pointer;
 }
 
 .loading-page {
